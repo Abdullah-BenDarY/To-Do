@@ -8,5 +8,6 @@
     <color name="selected_color">#5D9CEC</color>
     <color name="unselected_color">#C8C9CB</color>
     <color name="btm_nav_color">#FFFFFF</color>
+    <color name="gray_hint">#A9A9A9</color>
 
 </resources>
