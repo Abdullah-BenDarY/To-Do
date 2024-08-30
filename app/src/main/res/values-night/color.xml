@@ -10,8 +10,8 @@
     <color name="btm_nav_color">#141922</color>
     <color name="gray_hint">#CDCACA</color>
     <color name="green">#61E757</color>
-
     <color name="text_color">@color/black</color>
+    <color name="text_color2">@color/white</color>
 
 
 

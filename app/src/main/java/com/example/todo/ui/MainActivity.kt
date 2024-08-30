@@ -4,9 +4,14 @@ import androidx.activity.OnBackPressedCallback
 import androidx.navigation.findNavController
 import com.example.todo.R.id.*
 import com.example.todo.base.BaseActivity
+import com.example.todo.dataBase.MyDataBase
+import com.example.todo.dataBase.moel.ModelTask
 import com.example.todo.databinding.ActivityMainBinding
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
+
+    private val dataBase = MyDataBase
+    private val tasks = ModelTask()
 
     override fun onClicks() {
         setupNavController()
@@ -15,6 +20,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 findNavController(nav_host_fragment).navigate(addTaskBottomSheet)
             }
 
+            appBar.setOnClickListener{
+                dataBase.dp?.myDao()?.deleteTask(tasks)
+            }
         }
     }
 

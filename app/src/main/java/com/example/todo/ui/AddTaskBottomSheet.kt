@@ -77,7 +77,7 @@ class AddTaskBottomSheet() :
     private fun initDateDialog(selectedDate: Calendar) {
         val dialog = DatePickerDialog(
             requireContext(),
-            { view, year, month, dayOfMonth ->
+            { _, year, month, dayOfMonth ->
                 selectedDate.set(Calendar.YEAR, year)
                 selectedDate.set(Calendar.MONTH, month)
                 selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)

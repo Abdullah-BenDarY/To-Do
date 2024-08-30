@@ -64,10 +64,12 @@ dependencies {
     //Leaks
     debugImplementation (libs.leakcanary.android)
 
+    // sdp - ssp
     implementation (libs.sdp.android)
     implementation (libs.ssp.android)
-    implementation ("com.github.prolificinteractive:material-calendarview:1.1.1")
 
+    // calendar View
+    implementation(libs.calendar.view)
 
 
 
