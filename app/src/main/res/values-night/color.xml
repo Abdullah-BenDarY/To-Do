@@ -5,5 +5,8 @@
     <color name="trasparent">#00000000</color>
     <color name="primary_blue">#5D9CEC</color>
     <color name="background_color">#060E1E</color>
+    <color name="selected_color">#5D9CEC</color>
+    <color name="unselected_color">#C8C9CB</color>
+    <color name="btm_nav_color">#141922</color>
 
 </resources>
