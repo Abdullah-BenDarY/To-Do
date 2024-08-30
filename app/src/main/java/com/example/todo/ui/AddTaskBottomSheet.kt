@@ -5,17 +5,22 @@ import android.app.TimePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.todo.R
+import com.example.todo.R.id.addTaskBottomSheet
+import com.example.todo.R.id.nav_host_fragment
 import com.example.todo.base.BaseBottomSheet
 import com.example.todo.dataBase.MyDataBase
 import com.example.todo.dataBase.moel.ModelTask
 import com.example.todo.databinding.BottomSheetAddTaskBinding
+import com.example.todo.ui.tasks.TaskFragment
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-
-class AddTaskBottomSheet :
+class AddTaskBottomSheet() :
     BaseBottomSheet<BottomSheetAddTaskBinding>(BottomSheetAddTaskBinding::inflate) {
+    // Create a Calendar instance to store the selected date and time
     private val selectedDate = Calendar.getInstance()
     private val dataBase = MyDataBase
     private val newTask = ModelTask()
@@ -38,12 +43,19 @@ class AddTaskBottomSheet :
 
             addTaskBtn.setOnClickListener {
                 if (!validate()) return@setOnClickListener
+
                 val title = binding.titleTil.editText?.text.toString()
                 val description = binding.descriptionTil.editText?.text.toString()
-                selectedDate.timeInMillis
-                createTask(newTask , title , description ,
-                    selectedDate.timeInMillis , selectedDate.timeInMillis)
-                dismiss
+
+                createTask(
+                    newTask,
+                    title,
+                    description,
+                    selectedDate.timeInMillis,
+                    selectedDate.timeInMillis
+                )
+                findNavController().navigate(R.id.taskFragment)
+                dismiss() // This will dismiss the bottom sheet
             }
 
         }
@@ -153,5 +165,4 @@ class AddTaskBottomSheet :
         }
         return isValid
     }
-
 }

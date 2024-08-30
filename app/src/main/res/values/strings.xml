@@ -10,4 +10,5 @@
     <string name="add_new_task">Add new task</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
+    <string name="done">Done!\t</string>
 </resources>

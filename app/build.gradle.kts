@@ -66,6 +66,8 @@ dependencies {
 
     implementation (libs.sdp.android)
     implementation (libs.ssp.android)
+    implementation ("com.github.prolificinteractive:material-calendarview:1.1.1")
+
 
 
 
