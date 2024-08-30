@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/taskFragment">
 
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.todo.ui.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/taskFragment"
+        android:name="com.example.todo.ui.TaskFragment"
+        android:label="fragment_task"
+        tools:layout="@layout/fragment_task" >
+        <action
+            android:id="@+id/action_taskFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/addTaskBottomSheet"
+        android:name="com.example.todo.ui.AddTaskBottomSheet"
+        android:label="fragment_add_task_bottom_sheet"
+        tools:layout="@layout/fragment_add_task_bottom_sheet" />
 </navigation>
