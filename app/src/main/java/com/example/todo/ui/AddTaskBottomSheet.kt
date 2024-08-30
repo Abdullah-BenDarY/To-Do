@@ -1,16 +1,13 @@
 package com.example.todo.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.example.todo.R
 import com.example.todo.base.BaseBottomSheet
-import com.example.todo.databinding.FragmentAddTaskBottomSheetBinding
+import com.example.todo.databinding.BottomSheetAddTaskBinding
 
 
-class AddTaskBottomSheet: BaseBottomSheet<FragmentAddTaskBottomSheetBinding>(FragmentAddTaskBottomSheetBinding::inflate) {
+class AddTaskBottomSheet :
+    BaseBottomSheet<BottomSheetAddTaskBinding>(BottomSheetAddTaskBinding::inflate) {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,5 +16,25 @@ class AddTaskBottomSheet: BaseBottomSheet<FragmentAddTaskBottomSheetBinding>(Fra
     }
 
     override fun onClicks() {
+        binding.apply {
+            selectDateTv.setOnClickListener {
+
+            }
+
+            selectTimeTv.setOnClickListener {
+
+            }
+            addTaskBtn.setOnClickListener {
+
+            }
+            title.setOnClickListener {
+
+            }
+            description.setOnClickListener {
+
+            }
+
+        }
+
     }
 }
