@@ -6,9 +6,10 @@ import androidx.room.PrimaryKey
 
 @Entity //Table name
 data class ModelTask(
-    @PrimaryKey(autoGenerate = true) //by default false
+
     @ColumnInfo(index = true) // to search by index id to search faster
-    val id : Int,
+    @PrimaryKey(autoGenerate = true) //by default false
+    val id : Int = 0,
     @ColumnInfo
     var title : String? = null,
     @ColumnInfo

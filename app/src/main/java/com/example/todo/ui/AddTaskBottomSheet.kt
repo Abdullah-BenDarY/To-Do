@@ -1,18 +1,24 @@
 package com.example.todo.ui
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
 import com.example.todo.R
 import com.example.todo.base.BaseBottomSheet
+import com.example.todo.dataBase.MyDataBase
+import com.example.todo.dataBase.moel.ModelTask
 import com.example.todo.databinding.BottomSheetAddTaskBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 class AddTaskBottomSheet :
     BaseBottomSheet<BottomSheetAddTaskBinding>(BottomSheetAddTaskBinding::inflate) {
     private val selectedDate = Calendar.getInstance()
-
+    private val dataBase = MyDataBase
+    private val newTask = ModelTask()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,19 +33,33 @@ class AddTaskBottomSheet :
             }
 
             selectTimeTv.setOnClickListener {
-
+                initTimeDialog(selectedDate)
             }
+
             addTaskBtn.setOnClickListener {
-                if (validate()) dismiss
-            }
-            title.setOnClickListener {
-
-            }
-            description.setOnClickListener {
-
+                if (!validate()) return@setOnClickListener
+                val title = binding.titleTil.editText?.text.toString()
+                val description = binding.descriptionTil.editText?.text.toString()
+                selectedDate.timeInMillis
+                createTask(newTask , title , description ,
+                    selectedDate.timeInMillis , selectedDate.timeInMillis)
+                dismiss
             }
 
         }
+    }
+
+
+    private fun createTask(newTask: ModelTask , title: String,
+                           description: String , date : Long , time : Long){
+        newTask.apply {
+            this.title = title
+            this.description = description
+            this.date = date
+            this.time = time
+            this.isDone = false
+        }
+        dataBase.dp?.myDao()?.createTask(newTask)
     }
 
     private fun initDateDialog(selectedDate: Calendar) {
@@ -57,6 +77,21 @@ class AddTaskBottomSheet :
         dialog.show()
     }
 
+    private fun initTimeDialog(selectedDate: Calendar) {
+        val dialog = TimePickerDialog(
+            requireContext(),
+            { _, hourOfDay, minute ->
+                selectedDate.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                selectedDate.set(Calendar.MINUTE, minute)
+                updateTimeTv(selectedDate)
+            },
+            selectedDate.get(Calendar.HOUR_OF_DAY),
+            selectedDate.get(Calendar.MINUTE),
+            false // Set to false to use the 12-hour format with AM/PM
+        )
+        dialog.show()
+    }
+
     private fun updateDateTv() {
         val year = selectedDate.get(Calendar.YEAR)
         val month = selectedDate.get(Calendar.MONTH)
@@ -65,6 +100,11 @@ class AddTaskBottomSheet :
         "$day / ${month + 1} / $year".also {
             binding.selectDateTv.text = it
         }
+    }
+
+    private fun updateTimeTv(selectedDate: Calendar) {
+        val timeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault()) // a --> 12-hour format with AM/PM
+        binding.selectTimeTv.text = timeFormat.format(selectedDate.time)
     }
 
     private fun setupTextWatchers() {
