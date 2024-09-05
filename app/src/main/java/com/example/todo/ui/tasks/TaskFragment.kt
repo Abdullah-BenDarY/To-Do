@@ -11,6 +11,7 @@ import com.example.todo.dataBase.moel.ModelTask
 import com.example.todo.databinding.FragmentTaskBinding
 import com.example.todo.util.clearTime
 import com.example.todo.util.setDate
+import com.example.todo.util.showBottomAppBarViews
 import com.example.todo.util.showDeleteDialog
 import com.example.todo.util.showToast
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -20,7 +21,6 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::infl
 
     private var todoList = mutableListOf<ModelTask>()
     private val adapterTasks = AdapterTasks()
-    private val dataBase = MyDataBase
     private var calendarDay = CalendarDay.today()
 
 
@@ -29,6 +29,12 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::infl
         initCalendarListenter()
         refreshTodos()
         initAdapter()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshTodos()
+        showBottomAppBarViews()
     }
 
 
@@ -44,10 +50,10 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::infl
         adapterTasks.onDone = AdapterTasks.OnItemClickListener {
             if (it.isDone!!) {
                 it.isDone = false
-                dataBase.dp?.myDao()?.updateTask(it)
+                MyDataBase.dp?.myDao()?.updateTask(it)
             } else {
                 it.isDone = true
-                dataBase.dp?.myDao()?.updateTask(it)
+                MyDataBase.dp?.myDao()?.updateTask(it)
             }
             refreshTodos()
 
@@ -77,7 +83,7 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::infl
     }
 
     private fun deletaTask(todoModel: ModelTask) {
-        dataBase.dp?.myDao()?.deleteTask(todoModel)
+        MyDataBase.dp?.myDao()?.deleteTask(todoModel)
         showToast("Task Deleted Successfully")
         refreshTodos()
     }
@@ -95,7 +101,7 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::infl
         val calendar = Calendar.getInstance()
         calendar.setDate(calendarDay.year, calendarDay.month - 1, calendarDay.day)
         calendar.clearTime()
-        todoList = dataBase.dp?.myDao()?.getTaskByDate(calendar.timeInMillis)?.toMutableList()
+        todoList = MyDataBase.dp?.myDao()?.getTaskByDate(calendar.timeInMillis)?.toMutableList()
             ?: mutableListOf()
         adapterTasks.tasksList = todoList
         adapterTasks.notifyDataSetChanged()

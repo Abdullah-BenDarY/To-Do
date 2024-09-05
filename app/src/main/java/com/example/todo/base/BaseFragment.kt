@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.example.todo.dataBase.moel.ModelTask
 
 abstract class BaseFragment <VB :
 ViewBinding>(private val bindingInflater : (inflater: LayoutInflater) -> VB ) : Fragment() {
@@ -27,7 +28,10 @@ ViewBinding>(private val bindingInflater : (inflater: LayoutInflater) -> VB ) : 
         onClicks()
     }
 
-    abstract fun onClicks()
+    open fun onClicks() {
+    }
+    open fun onClicks(task:ModelTask) {
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

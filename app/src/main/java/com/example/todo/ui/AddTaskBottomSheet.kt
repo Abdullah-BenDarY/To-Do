@@ -3,7 +3,6 @@ package com.example.todo.ui
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
-import java.util.Calendar
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
@@ -12,16 +11,25 @@ import com.example.todo.base.BaseBottomSheet
 import com.example.todo.dataBase.MyDataBase
 import com.example.todo.dataBase.moel.ModelTask
 import com.example.todo.databinding.BottomSheetAddTaskBinding
+import com.example.todo.util.clearDate
 import com.example.todo.util.clearTime
+import com.example.todo.util.showDateDialog
+import com.example.todo.util.showTimePicker
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 class AddTaskBottomSheet() :
     BaseBottomSheet<BottomSheetAddTaskBinding>(BottomSheetAddTaskBinding::inflate) {
-    // Create a Calendar instance to store the selected date and time
-    private val calendar = Calendar.getInstance()
     private val dataBase = MyDataBase
     private val newTask = ModelTask()
+    private val calendar  = Calendar.getInstance()
+    private val date = Calendar.getInstance().apply {
+        clearTime()
+    }
+    private val time = Calendar.getInstance().apply {
+        clearDate()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,89 +39,47 @@ class AddTaskBottomSheet() :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        updateDateTv()
-        updateTimeTv(calendar)
+        updateDateTv( year = date.get(Calendar.YEAR) ,
+            month =  date.get(Calendar.MONTH) ,
+            day= date.get(Calendar.DAY_OF_MONTH))
+        updateTimeTv(time)
     }
 
     override fun onClicks() {
         setupTextWatchers()
         binding.apply {
             selectDateTv.setOnClickListener {
-                initDateDialog(calendar)
+                showDateDialog(date) { year: Int, month: Int, day: Int ->
+                    updateDateTv(year, month, day) }
             }
-
             selectTimeTv.setOnClickListener {
-                initTimeDialog(calendar)
+                showTimePicker(time){ updateTimeTv(time) }
             }
 
             addTaskBtn.setOnClickListener {
                 if (!validate()) return@setOnClickListener
                 calendar.clearTime()
-                val title = binding.titleTil.editText?.text.toString()
-                val description = binding.descriptionTil.editText?.text.toString()
-
-                createTask(
-                    newTask,
-                    title,
-                    description,
-                    calendar.timeInMillis,
-                    calendar.timeInMillis
-                )
+                createTask(newTask)
                 findNavController().navigate(R.id.taskFragment)
-                dismiss() // This will dismiss the bottom sheet
+                dismiss()
             }
-
         }
     }
 
-
-    private fun createTask(newTask: ModelTask , title: String,
-                           description: String , date : Long , time : Long){
+    private fun createTask(newTask: ModelTask){
+        val title = binding.titleTil.editText?.text.toString()
+        val description = binding.descriptionTil.editText?.text.toString()
         newTask.apply {
             this.title = title
             this.description = description
-            this.date = date
-            this.time = time
+            this.date = calendar.timeInMillis
+            this.time = calendar.timeInMillis
             this.isDone = false
         }
         dataBase.dp?.myDao()?.createTask(newTask)
     }
 
-    private fun initDateDialog(selectedDate: Calendar) {
-        val dialog = DatePickerDialog(
-            requireContext(),
-            { _, year, month, dayOfMonth ->
-                selectedDate.set(Calendar.YEAR, year)
-                selectedDate.set(Calendar.MONTH, month)
-                selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                updateDateTv()
-            }, selectedDate.get(Calendar.YEAR),
-            selectedDate.get(Calendar.MONTH),
-            selectedDate.get(Calendar.DAY_OF_MONTH)
-        )
-        dialog.show()
-    }
-
-    private fun initTimeDialog(selectedDate: Calendar) {
-        val dialog = TimePickerDialog(
-            requireContext(),
-            { _, hourOfDay, minute ->
-                selectedDate.set(Calendar.HOUR_OF_DAY, hourOfDay)
-                selectedDate.set(Calendar.MINUTE, minute)
-                updateTimeTv(selectedDate)
-            },
-            selectedDate.get(Calendar.HOUR_OF_DAY),
-            selectedDate.get(Calendar.MINUTE),
-            false // Set to false to use the 12-hour format with AM/PM
-        )
-        dialog.show()
-    }
-
-    private fun updateDateTv() {
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-
+    private fun updateDateTv(year: Int, month: Int, day: Int) {
         "$day / ${month + 1} / $year".also {
             binding.selectDateTv.text = it
         }
