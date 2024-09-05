@@ -33,29 +33,36 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::infl
 
 
     override fun onClicks() {
-        adapterTasks.onDelete = object : AdapterTasks.OnItemClickListener {
-            override fun onClick(todoModel: ModelTask) {
+        adapterTasks.onDelete =
+            AdapterTasks.OnItemClickListener { todoModel ->
                 showDeleteDialog(
                     onPositiveClick = {
                         deletaTask(todoModel)
                     })
             }
-        }
 
-        adapterTasks.onDone = object : AdapterTasks.OnItemClickListener {
-            override fun onClick(todoModel: ModelTask) {
-                showToast(todoModel.title + " Done Successfully")
+        adapterTasks.onDone = AdapterTasks.OnItemClickListener {
+            if (it.isDone!!) {
+                it.isDone = false
+                dataBase.dp?.myDao()?.updateTask(it)
+            } else {
+                it.isDone = true
+                dataBase.dp?.myDao()?.updateTask(it)
+            }
+            refreshTodos()
 
             }
-        }
 
-        adapterTasks.onItemClick = object : AdapterTasks.OnItemClickListener {
-            override fun onClick(todoModel: ModelTask) {
-                findNavController().navigate(
-                    TaskFragmentDirections.actionTaskFragmentToEditTaskFragment(todoModel)
-                )
+
+        adapterTasks.onItemClick =
+            AdapterTasks.OnItemClickListener { todoModel ->
+                if (todoModel.isDone!!)
+                    showToast("This task is completed")
+                else
+                    findNavController().navigate(
+                        TaskFragmentDirections.actionTaskFragmentToEditTaskFragment(todoModel)
+                    )
             }
-        }
 
         binding.dateView.setOnDateChangedListener { widget, date, selected ->
             calendarDay = date

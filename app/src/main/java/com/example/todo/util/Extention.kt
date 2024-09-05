@@ -4,7 +4,9 @@ import android.app.AlertDialog
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import android.content.Context
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 fun Fragment.showToast (massage : Any?) {
     Toast.makeText(requireContext(), "$massage", Toast.LENGTH_LONG).show()
@@ -70,5 +72,9 @@ fun Context.showDialog(
         }
         .create()
         .show()
+}
+fun Long.formatTimeOnly(): String {
+    val timeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+    return timeFormat.format(this)
 }
 
