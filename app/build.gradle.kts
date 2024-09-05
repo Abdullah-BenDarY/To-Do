@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("androidx.navigation.safeargs.kotlin")
     id ("kotlin-kapt")
-
+    id("kotlin-parcelize")
 }
 
 android {
@@ -70,6 +70,10 @@ dependencies {
 
     // calendar View
     implementation(libs.calendar.view)
+
+    //swipeToDelete
+    implementation (libs.swipelayout)
+
 
 
 

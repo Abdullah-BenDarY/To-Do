@@ -7,7 +7,12 @@ import com.example.todo.dataBase.moel.ModelTask
 import com.example.todo.databinding.ItemTaskBinding
 
 class AdapterTasks() : RecyclerView.Adapter<AdapterTasks.Holder>() {
-    var tasksList: MutableList<ModelTask>? = null
+    var tasksList: List<ModelTask>? = null
+    var onItemClick: OnItemClickListener? = null
+    var onDelete: OnItemClickListener? = null
+    var onDone: OnItemClickListener? = null
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemTaskBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Holder(binding)
@@ -18,33 +23,39 @@ class AdapterTasks() : RecyclerView.Adapter<AdapterTasks.Holder>() {
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val data = tasksList!![position]
+        onClicks(holder, data)
         holder.bind(data)
     }
 
 
-    private lateinit var onClick: (Int) -> Unit?
-    fun setOnClick(onClick: (Int) -> Unit) {
-        this.onClick = onClick
-    }
-
-    fun addItem() {
-        notifyItemInserted(tasksList?.size?: 0)
-    }
-
-    inner class Holder(private val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            binding.root.setOnClickListener {
-                onClick.invoke(tasksList!![layoutPosition].id)
-            }
-        }
+    inner class Holder(val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(task: ModelTask) {
             binding.apply {
                 title.text = task.title
                 time.text = task.time.toString()
+
             }
         }
+    }
+
+
+    fun onClicks(holder: Holder, data: ModelTask) {
+        holder.binding.leftView.setOnClickListener {
+            onDelete?.onClick(data)
+        }
+        holder.binding.btnTaskIsDone.setOnClickListener {
+            onDone?.onClick(data)
+        }
+        holder.binding.todoItem.setOnClickListener {
+            onItemClick?.onClick(data)
+        }
+
+    }
+
+    interface OnItemClickListener {
+        fun onClick(todoModel: ModelTask)
+
 
     }
 
