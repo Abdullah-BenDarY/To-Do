@@ -1,9 +1,12 @@
 package com.example.todo.dataBase.moel
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity //Table name
 data class ModelTask(
 
@@ -20,4 +23,4 @@ data class ModelTask(
     var time : Long? = null,
     @ColumnInfo
     var  isDone : Boolean? = null,
-)
+): Parcelable

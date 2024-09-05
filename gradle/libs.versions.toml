@@ -1,5 +1,6 @@
 [versions]
 agp = "8.5.0"
+dragDropSwipeRecyclerview = "1.2.0"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -15,6 +16,8 @@ activity = "1.9.1"
 constraintlayout = "2.1.4"
 sdpAndroid = "1.1.1"
 sspAndroid = "1.1.1"
+calendar = "2.0.0"
+swipelayout = "1.3.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -22,6 +25,7 @@ androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fr
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationFragmentKtx" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomCompiler" }
+drag-drop-swipe-recyclerview = { module = "com.ernestoyaquello.dragdropswiperecyclerview:drag-drop-swipe-recyclerview", version.ref = "dragDropSwipeRecyclerview" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -31,8 +35,10 @@ material = { group = "com.google.android.material", name = "material", version.r
 navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationSafeArgsGradlePlugin" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+calendar-view = { group = "com.github.prolificinteractive", name = "material-calendarview", version.ref = "calendar" }
 sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "sdpAndroid" }
 ssp-android = { module = "com.intuit.ssp:ssp-android", version.ref = "sspAndroid" }
+swipelayout = { module = "com.github.zerobranch:SwipeLayout", version.ref = "swipelayout" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

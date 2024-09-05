@@ -10,4 +10,7 @@
     <string name="add_new_task">Add new task</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
+    <string name="done">Done!\t</string>
+    <string name="save">Save</string>
+    <string name="edit_task">Edit Task</string>
 </resources>

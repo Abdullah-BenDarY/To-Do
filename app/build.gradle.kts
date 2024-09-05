@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("androidx.navigation.safeargs.kotlin")
     id ("kotlin-kapt")
-
+    id("kotlin-parcelize")
 }
 
 android {
@@ -64,8 +64,16 @@ dependencies {
     //Leaks
     debugImplementation (libs.leakcanary.android)
 
+    // sdp - ssp
     implementation (libs.sdp.android)
     implementation (libs.ssp.android)
+
+    // calendar View
+    implementation(libs.calendar.view)
+
+    //swipeToDelete
+    implementation (libs.swipelayout)
+
 
 
 
