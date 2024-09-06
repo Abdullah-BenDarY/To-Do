@@ -1,4 +1,4 @@
-package com.example.todo.ui.tasks
+package com.example.todo.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle

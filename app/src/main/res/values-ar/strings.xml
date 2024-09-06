@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">To Do</string>
+    <string name="todo_list">قائمة المهام</string>
+    <string name="list">القائمه</string>
+    <string name="settings">الإعدادات</string>
+    <string name="select_time">اختر الوقت</string>
+    <string name="select_date">اختر التاريخ</string>
+    <string name="add_new_task">مهمه جديده</string>
+    <string name="title">إسم المهمه</string>
+    <string name="description">الوصف</string>
+    <string name="done">منتهيه!</string>
+    <string name="save">حفظ التغييرات</string>
+    <string name="edit_task">تعديل المهمه</string>
+    <string name="english">الإنجليزيه</string>
+    <string name="arabic">العربيه</string>
+    <string name="mode">الوضع</string>
+    <string name="light">نهاري</string>
+    <string name="dark">ليلي</string>
+    <string name="language">اللغات</string>
+
+    <string-array name="languages">
+        <item>الإنجليزيه</item>
+        <item>العربيه</item>
+    </string-array>
+
+    <string-array name="modes">
+        <item>نهاري</item>
+        <item>ليلي</item>
+    </string-array>
+</resources>

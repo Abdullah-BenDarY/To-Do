@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/taskFragment"
-        android:name="com.example.todo.ui.tasks.TaskFragment"
+        android:name="com.example.todo.ui.TaskFragment"
         android:label="fragment_task"
         tools:layout="@layout/fragment_task" >
         <action
