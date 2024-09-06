@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/top_view"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/_50sdp"
         android:src="@color/primary_blue"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,6 +34,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
+        app:startIconDrawable="@drawable/ic_languages"
         android:drawSelectorOnTop="true"
         app:boxBackgroundColor="@color/btm_nav_color"
         app:boxStrokeColor="@color/primary_blue"
@@ -44,9 +45,6 @@
             android:id="@+id/autoCompleteTV_languages"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableStart="@drawable/ic_languages"
-            android:drawableTint="@color/primary_blue"
-            android:drawablePadding="@dimen/_10sdp"
             android:fontFamily="@font/poppins_bold"
             android:inputType="none"
             android:text="@string/english"
@@ -88,7 +86,6 @@
             android:text="@string/light"
             android:drawableStart="@drawable/ic_light_mode"
             android:drawableTint="@color/primary_blue"
-            android:drawablePadding="@dimen/_10sdp"
             android:textColor="@color/primary_blue"
             android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
