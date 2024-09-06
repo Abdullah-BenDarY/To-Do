@@ -13,6 +13,8 @@ import com.example.todo.dataBase.moel.ModelTask
 import com.example.todo.databinding.BottomSheetAddTaskBinding
 import com.example.todo.util.clearDate
 import com.example.todo.util.clearTime
+import com.example.todo.util.formatDateOnly
+import com.example.todo.util.formatTimeOnly
 import com.example.todo.util.showDateDialog
 import com.example.todo.util.showTimePicker
 import java.text.SimpleDateFormat
@@ -24,10 +26,10 @@ class AddTaskBottomSheet() :
     private val dataBase = MyDataBase
     private val newTask = ModelTask()
     private val calendar  = Calendar.getInstance()
-    private val date = Calendar.getInstance().apply {
+    private val cDate = Calendar.getInstance().apply {
         clearTime()
     }
-    private val time = Calendar.getInstance().apply {
+    private val cTime = Calendar.getInstance().apply {
         clearDate()
     }
 
@@ -39,21 +41,21 @@ class AddTaskBottomSheet() :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        updateDateTv( year = date.get(Calendar.YEAR) ,
-            month =  date.get(Calendar.MONTH) ,
-            day= date.get(Calendar.DAY_OF_MONTH))
-        updateTimeTv(time)
+        updateDateTv( year = cDate.get(Calendar.YEAR) ,
+            month =  cDate.get(Calendar.MONTH) ,
+            day= cDate.get(Calendar.DAY_OF_MONTH))
+        updateTimeTv(cTime)
     }
 
     override fun onClicks() {
         setupTextWatchers()
         binding.apply {
             selectDateTv.setOnClickListener {
-                showDateDialog(date) { year: Int, month: Int, day: Int ->
+                showDateDialog(cDate) { year: Int, month: Int, day: Int ->
                     updateDateTv(year, month, day) }
             }
             selectTimeTv.setOnClickListener {
-                showTimePicker(time){ updateTimeTv(time) }
+                showTimePicker(cTime){ updateTimeTv(cTime) }
             }
 
             addTaskBtn.setOnClickListener {
@@ -72,8 +74,8 @@ class AddTaskBottomSheet() :
         newTask.apply {
             this.title = title
             this.description = description
-            this.date = calendar.timeInMillis
-            this.time = calendar.timeInMillis
+            this.date = cDate.timeInMillis
+            this.time = cTime.timeInMillis
             this.isDone = false
         }
         dataBase.dp?.myDao()?.createTask(newTask)

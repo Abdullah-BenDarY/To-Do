@@ -13,4 +13,8 @@
     <string name="done">Done!\t</string>
     <string name="save">Save Changes</string>
     <string name="edit_task">Edit Task</string>
+    <string name="english">English</string>
+    <string name="mode">Mode</string>
+    <string name="light">Light</string>
+    <string name="language">Language</string>
 </resources>
